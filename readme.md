@@ -25,7 +25,7 @@ module "network" {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 |Virtual Network| (Required) virtual network details. <br> <br> Properties: <br> `name` (Required) - virtual network name <br> `address_space`(Required) - address space <br> | <pre> object({<br> key = map(object({ <br> name = string <br> address_space = list(string) }))<br> </pre> | n/a | yes |
-| Subnet | (Required) subnet that applies to the virtual network. <br> <br> Properties: <br> `subnet_name` (Required) - virtual network name <br> `subnet_address`(Required) - address space <br> `network_interface_name`(Required) - network interface name <br> `ip_configuration_name`(Required) - network interface ip configuration name <br> | <pre>subnets = list(object({<br> subnet_name = string<br> subnet_address = list(string) <br> <br>network_interfaces = list(object({ <br> network_interface_name = string <br> ip_configuration_name = string <br>  })) <br> })) </pre> | `[]` | yes |
+| Subnet | (Required) subnet that applies to the virtual network. <br> <br> Properties: <br> `subnet_name` (Required) - virtual network name <br> `subnet_address`(Required) - address space <br> `network_interface_name`(Required) - network interface name <br> `ip_configuration_name`(Required) - network interface ip configuration name <br> | <pre>subnets = list(object({<br> subnet_name = string<br> subnet_address = list(string) <br> <br>network_interfaces = list(object({ <br> network_interface_name = string <br> ip_configuration_name = string <br>  })) <br> })) </pre> | `{}` | yes |
 
 
 ## Example
