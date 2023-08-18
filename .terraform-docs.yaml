@@ -1,7 +1,5 @@
 formatter: "markdown table"
 content: |-
-  # Azure Vnet Peering Module
-
   {{ .Requirements }}
 
   {{ .Providers }}
@@ -24,6 +22,8 @@ content: |-
   ```
 output:
   file: README.md
-  mode: replace
+  mode: inject
   template: |-
-    {{ .Content }}
+      <!-- BEGIN_AUTOMATED_TF_DOCS_BLOCK -->
+      {{ .Content }}
+      <!-- END_AUTOMATED_TF_DOCS_BLOCK -->

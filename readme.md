@@ -1,5 +1,11 @@
-# Azure Vnet Peering Module
+# Azure Vnet Peering Module for Terraform
+This Terraform module provides a simple interface for creating a Virtual Network, Subnet and Network Interfaces.
 
+## Features
+- Create multiple virtual networks with its corresponding subnets and network inferfaces.
+- Utilise Terraform For Expressions, Local Variables and Conditions.
+
+<!-- BEGIN_AUTOMATED_TF_DOCS_BLOCK -->
 ## Requirements
 
 No requirements.
@@ -93,3 +99,5 @@ resource "azurerm_network_interface" "this" {
   }
 }
 ```
+<!-- END_AUTOMATED_TF_DOCS_BLOCK -->
+
