@@ -1,0 +1,29 @@
+formatter: "markdown table"
+content: |-
+  # Azure Vnet Peering Module
+
+  {{ .Requirements }}
+
+  {{ .Providers }}
+
+  {{ .Resources }}
+
+  {{ .Inputs }}
+
+  ## Usage
+  Basic usage of this module is as follows:
+
+  ```hcl
+  {{ include "./examples/main.tf"}}
+  ```
+
+  ## Example(s)
+
+  ```hcl
+  {{ include "./main.tf"}}
+  ```
+output:
+  file: README.md
+  mode: replace
+  template: |-
+    {{ .Content }}
