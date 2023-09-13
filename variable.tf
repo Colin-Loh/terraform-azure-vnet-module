@@ -1,31 +1,29 @@
-#Module      : Virtual Network Configuration
-#Description : This will automatically create the virtual network, subnets and network interfaces. 
+variable "virtual_network" {}
 
-variable "resource_group_name" {
-  type = string
-  description = "value for resource group name"
-}
-
-variable "resource_group_location" {
-  type = string
-  description = "value for resource group location"
-}
-
-variable "virtual_networks" {
-  type = map(object({
-    name = string
-    address_space = list(string)
-
-    subnets = list(object({
-      subnet_name    = string
-      subnet_address = list(string)
-
-      network_interfaces = list(object({
-        network_interface_name = string
-        ip_configuration_name = string
+variable "subnets" {
+  type = object({
+    name           = string
+    address_prefixes  = list(string)
+    security_group = object({
+      name  = string
+      rules = list(object({
+        name                       = string
+        description                = string
+        protocol                   = string
+        source_port_range          = string
+        destination_port_range     = string
+        source_address_prefix      = string
+        destination_address_prefix = string
+        access                     = string
+        direction                  = string
       }))
-    }))
-  }))
-  
-  description = "value for virtual network"
-} 
+    })
+  })
+}
+
+variable "resource_group" {
+  type = object({
+    name = string
+    location = string
+  })
+}

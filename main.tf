@@ -1,41 +1,48 @@
 resource "azurerm_virtual_network" "this" {
-  for_each = var.virtual_networks
-
-  name                = each.value.name
-  address_space       = each.value.address_space
-  location            = var.resource_group_location
-  resource_group_name = var.resource_group_name
+  name = var.virtual_network.name
+  location = var.resource_group.location
+  resource_group_name = var.resource_group.name
+  address_space = var.virtual_network.address_space
 }
 
 resource "azurerm_subnet" "this" {
-  for_each = local.subnets
-
-  name                 = each.value.subnet_name
-  resource_group_name = var.resource_group_name
-  virtual_network_name = azurerm_virtual_network.this[each.value.vnet_name].name
-  address_prefixes     = each.value.subnet_address
+  name = var.subnets.name
+  resource_group_name = var.resource_group.name
+  virtual_network_name = azurerm_virtual_network.this.name
+  address_prefixes = var.subnets.address_prefixes
 }
 
-data "azurerm_subnet" "subnet" {
-  for_each = local.subnets
+resource "azurerm_network_security_group" "this" {
+  name = var.subnets.security_group.name
+  location = var.resource_group.location
+  resource_group_name = var.resource_group.name
 
-  name                 = each.key
-  virtual_network_name = each.value.vnet_name
-  resource_group_name = var.resource_group_name
+  dynamic "security_rule" {
+    for_each = {
+      for id, rule in var.subnets.security_group.rules : 
+      rule.name => {
+        rule = rule
+        priority = 100 + id #check is this right? 
+      }
+    }
 
-  depends_on = [azurerm_subnet.this]
-}
-
-resource "azurerm_network_interface" "this" {
-  for_each = local.subnets
-
-  name                = each.value.network_interface_name
-  location            = var.resource_group_location
-  resource_group_name = var.resource_group_name
-
-  ip_configuration {
-    name                          = each.value.ip_configuration_name
-    subnet_id                     = data.azurerm_subnet.subnet[each.value.subnet_name].id
-    private_ip_address_allocation = "Dynamic"
+    content {
+    name                       = security_rule.value.rule.name
+    description                = security_rule.value.rule.description
+    protocol                   = security_rule.value.rule.protocol
+    source_port_range          = security_rule.value.rule.source_port_range
+    destination_port_range     = security_rule.value.rule.destination_port_range
+    source_address_prefix      = security_rule.value.rule.source_address_prefix
+    destination_address_prefix = security_rule.value.rule.destination_address_prefix
+    access                     = security_rule.value.rule.access
+    priority                   = security_rule.value.priority
+    direction                  = security_rule.value.rule.direction
+    }
   }
 }
+
+resource "azurerm_subnet_network_security_group_association" "this" {
+  subnet_id                 = azurerm_subnet.this.id
+  network_security_group_id = azurerm_network_security_group.this.id
+}
+
