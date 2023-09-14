@@ -5,6 +5,9 @@
 *.tfstate
 *.tfstate.*
 
+# Exclude examples folder
+examples
+
 # Crash log files
 crash.log
 crash.*.log

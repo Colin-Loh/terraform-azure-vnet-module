@@ -27,7 +27,7 @@ module "virtual_networks" {
     security_group = { 
       name = "db-security-group"
       rules = [
-        { #note that it needs to be case sensitive
+        { 
           name                       = "test"
           description                = " "
           protocol                   = "Tcp"
@@ -38,7 +38,7 @@ module "virtual_networks" {
           access                     = "Allow"
           direction                  = "Inbound"
         },
-        { #note that it needs to be case sensitive
+        { 
           name                       = "test2"
           description                = " "
           protocol                   = "Tcp"
