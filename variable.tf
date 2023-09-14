@@ -60,7 +60,7 @@ variable "subnets" {
         )
       ]
     )
-    error_message = "Err: invalid direction scope."
+    error_message = "Err: invalid direction scope, possible values includes Inbound or Outbound"
   }
 
   validation {
@@ -73,7 +73,7 @@ variable "subnets" {
         )
       ]
     )
-    error_message = "Err: invalid allow scope."
+    error_message = "Err: invalid allow scope, possible values includes Allow or Deny"
   }
 
   validation {
