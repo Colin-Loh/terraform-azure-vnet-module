@@ -1,6 +1,6 @@
 variable "virtual_network" {
   type = object({
-    name = string
+    name          = string
     address_space = list(string)
   })
   description = <<DESC
@@ -14,10 +14,10 @@ variable "virtual_network" {
 
 variable "subnets" {
   type = object({
-    name           = string
-    address_prefixes  = list(string)
+    name             = string
+    address_prefixes = list(string)
     security_group = object({
-      name  = string
+      name = string
       rules = list(object({
         name                       = string
         description                = optional(string, "")
@@ -87,12 +87,12 @@ variable "subnets" {
       ]
     )
     error_message = "Err: invalid protocol scope, possible values include Tcp, Udp, Icmp, Esp, Ah or *"
-  }  
+  }
 }
 
 variable "resource_group" {
   type = object({
-    name = string
+    name     = string
     location = string
   })
 }
