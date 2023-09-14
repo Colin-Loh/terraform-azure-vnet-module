@@ -1,4 +1,9 @@
-variable "virtual_network" {}
+variable "virtual_network" {
+  type = object({
+    name = string
+    address_space = list(string)
+  })
+}
 
 variable "subnets" {
   type = object({
